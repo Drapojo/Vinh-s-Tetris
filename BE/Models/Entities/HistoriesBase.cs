@@ -14,6 +14,6 @@ namespace ProjectPRN22_Backend.Models.Entities
         public int Time { get; set; }
         [Required]
         public int Level { get; set; }
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } = DateTime.UtcNow;
     }
 }
