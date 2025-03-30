@@ -1,0 +1,66 @@
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    container_name: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
+      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
+      - POSTGRES_DB=${POSTGRES_DB?Variable not set}
+
+  frontend:
+    image: projectprn22_frontend
+    restart: always
+    container_name: frontend
+    build:
+      context: ./FE
+      dockerfile: ./Dockerfile
+      args:
+        - VITE_API_BASE_URL=${DOMAIN?Variable not set}/api
+        - VITE_API_BACKEND_URL=${DOMAIN?Variable not set}
+        - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID?Variable not set}
+        - VITE_GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI?Variable not set}
+    ports:
+      - "80:80"
+
+  backend:
+    image: projectprn22_backend
+    container_name: backend
+    restart: always
+    networks:
+      - default
+    build:
+      context: ./BE
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    env_file:
+      - .env
+    environment:
+        - ASPNETCORE_URLS="http://+:8080;http://+:8081"
+        - ConnectionStrings__DefaultConnection=Host=${POSTGRES_SERVER?Variable not set};Port=${POSTGRES_PORT?Variable not set};Database=${POSTGRES_DB?Variable not set};Username=${POSTGRES_USER?Variable not set};Password=${POSTGRES_PASSWORD?Variable not set}
+        - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID?Variable not set}
+        - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI?Variable not set}
+        - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET?Variable not set}
+        - JWT_SECRET=${JWT_SECRET?Variable not set}
+        - JWT_TOKEN_EXPIRY=${JWT_TOKEN_EXPIRY?Variable not set}
+        - ALLOW_CORS=${ALLOW_CORS?Variable not set}
+  
+volumes:
+  app-db-data:
