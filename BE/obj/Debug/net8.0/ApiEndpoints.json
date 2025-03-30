@@ -1,0 +1,152 @@
+[
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.HistoryAPI",
+    "Method": "GetUserHistory",
+    "RelativePath": "api/histories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortOrder",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.HistoryAPI",
+    "Method": "AddHistory",
+    "RelativePath": "api/histories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "history",
+        "Type": "ProjectPRN22_Backend.Models.Entities.Histories",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.HistoryAPI",
+    "Method": "GetLeaderboard",
+    "RelativePath": "api/leaderboard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortOrder",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.LoginAPI",
+    "Method": "Login",
+    "RelativePath": "api/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ProjectPRN22_Backend.Models.Schemas.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.MusicAPI",
+    "Method": "GetMusics",
+    "RelativePath": "api/music",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.UserAPI",
+    "Method": "GetUserDetail",
+    "RelativePath": "api/users/user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.UserAPI",
+    "Method": "UpdateUser",
+    "RelativePath": "api/users/user",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateUser",
+        "Type": "ProjectPRN22_Backend.Models.Schemas.UpdateUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectPRN22_Backend.Controllers.UserAPI",
+    "Method": "GetData",
+    "RelativePath": "api/users/user-data",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
