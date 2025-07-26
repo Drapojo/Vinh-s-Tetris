@@ -18,14 +18,14 @@ import {
 import EmptyState from "./EmptyState.tsx";
 
 export type HeaderTable = {
-  row?: (value: unknown, rowData: unknown) => React.ReactNode;
+  row?: (value: any, rowData: any) => React.ReactNode;
   sortable?: boolean;
   name: string;
   key: string;
 };
 
 export type BaseTableState = {
-  selected_items?: unknown[];
+  selected_items?: any[];
   sort_by?: string;
   sort_order?: "asc" | "desc" | "";
   page_index?: number;
@@ -62,7 +62,7 @@ interface BaseTableProps<T extends object> {
   isPending?: boolean;
 }
 
-type DataRow = { [key: string]: unknown; id: string };
+type DataRow = { [key: string]: any; id: string };
 
 const BaseTable = <T extends DataRow>({
   columns,
@@ -200,7 +200,7 @@ const BaseTable = <T extends DataRow>({
                     <Td>
                       <Checkbox
                         isChecked={selected_items?.some(
-                          (item: unknown) => item.id === row.id,
+                          (item: any) => item.id === row.id,
                         )}
                         onChange={() => toggleSelectItem(row)}
                       />

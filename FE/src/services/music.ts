@@ -9,11 +9,11 @@ export const musicApi = createApi({
   }),
   tagTypes: ["musics"],
   endpoints: (builder) => ({
-    getMusic: builder.query<unknown, void>({
+    getMusic: builder.query<any, void>({
       query: () => "",
       providesTags: ["musics"],
     }),
-    addMusic: builder.mutation<unknown, { name: string; url: string }>({
+    addMusic: builder.mutation<any, { name: string; url: string }>({
       query: (data) => ({
         url: "",
         method: "POST",
@@ -24,7 +24,7 @@ export const musicApi = createApi({
       }),
       invalidatesTags: ["musics"],
     }),
-    deleteMusic: builder.mutation<unknown, number>({
+    deleteMusic: builder.mutation<any, number>({
       query: (id) => ({
         url: `/${id}`,
         method: "DELETE",

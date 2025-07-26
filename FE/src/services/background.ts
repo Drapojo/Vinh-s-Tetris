@@ -8,7 +8,7 @@ export const backgroundApi = createApi({
     baseUrl: `${baseUrl}/background`,
   }),
   endpoints: (builder) => ({
-    getBackground: builder.query<unknown, void>({
+    getBackground: builder.query<any, void>({
       query: () => "",
     }),
   }),

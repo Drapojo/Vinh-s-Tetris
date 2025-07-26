@@ -18,19 +18,19 @@ export const userApi = createApi({
   }),
   tagTypes: ["user", "users"],
   endpoints: (builder) => ({
-    getUsers: builder.query<unknown, QueryParam>({
+    getUsers: builder.query<any, QueryParam>({
       query: (data) =>
         `?Search=${data.Search}&PageIndex=${data.PageIndex}&PageSize=${data.PageSize}&SortBy=${data.SortBy}&SortOrder=${data.SortOrder}`,
       providesTags: ["users"],
     }),
-    getUserDetail: builder.query<unknown, void>({
+    getUserDetail: builder.query<any, void>({
       query: () => "/user",
       providesTags: ["user"],
     }),
-    getUserData: builder.query<unknown, void>({
+    getUserData: builder.query<any, void>({
       query: () => "/user-data",
     }),
-    updateUser: builder.mutation<unknown, UpdateUser>({
+    updateUser: builder.mutation<any, UpdateUser>({
       query: (data) => ({
         url: "/user",
         method: "PUT",
