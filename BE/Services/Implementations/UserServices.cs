@@ -42,5 +42,10 @@ namespace ProjectPRN22_Backend.Services.Implementations
         {
             return await _usersRepo.GetPlayedData(id);
         }
+
+        public async Task<ResponsePublics<UserPublic>> GetAllUsers(QueryParam queryParam)
+        {
+            return await _usersRepo.GetAllWithQueryAsync(queryParam);
+        }
     }
 }

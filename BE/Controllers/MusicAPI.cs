@@ -21,5 +21,17 @@ namespace ProjectPRN22_Backend.Controllers
             IEnumerable<Musics> musics = await _musicServices.GetAllMusic();
             return Ok(musics);
         }
+        [HttpPost()]
+        public async Task<IActionResult> AddMusic([FromBody] Musics music)
+        {
+            Musics musics = await _musicServices.AddMusic(music);
+            return Ok(musics);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMusic(int id)
+        {
+            await _musicServices.DeleteMusic(id);
+            return Ok();
+        }
     }
 }

@@ -15,6 +15,48 @@ namespace ProjectPRN22_Backend.Repositories.Implementations
             _context = context;
         }
 
+        public async Task<ResponsePublics<UserPublic>> GetAllWithQueryAsync(QueryParam queryParam)
+        {
+            IQueryable<Users> query = _context.Users.Include(u => u.Histories);
+
+            if (!string.IsNullOrEmpty(queryParam.Search))
+            {
+                query = query.Where(u => u.Name.Contains(queryParam.Search) || u.Email.Contains(queryParam.Search));
+            }
+
+            int count = await query.CountAsync();
+
+            if (!string.IsNullOrEmpty(queryParam.SortBy))
+            {
+                bool isAscending = queryParam.SortOrder?.ToLower() == "asc";
+                query = isAscending
+                    ? query.OrderBy(h => EF.Property<object>(h, queryParam.SortBy))
+                    : query.OrderByDescending(h => EF.Property<object>(h, queryParam.SortBy));
+            }
+
+            int skip = queryParam.PageIndex * queryParam.PageSize;
+            query = query.Skip(skip).Take(queryParam.PageSize);
+
+            var data = await query.Select(u => new UserPublic
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email,
+                Data = new UserDataDto
+                {
+                    GamePlayed = u.Histories.Count(),
+                    HighScore = u.Histories.Any() ? u.Histories.Max(h => h.Points) : 0
+                }
+            }).ToListAsync();
+
+            return new ResponsePublics<UserPublic>
+            {
+                Data = data,
+                Count = count
+            };
+        }
+
+
         public async Task<Users> GetByEmailAsync(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));

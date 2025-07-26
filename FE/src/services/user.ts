@@ -1,6 +1,7 @@
 import { appConfigs } from "../configs/app.ts";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { UpdateUser } from "../type/User.ts";
+import { QueryParam } from "../type/QueryParam.ts";
 
 const baseUrl = appConfigs.baseUrl;
 export const userApi = createApi({
@@ -15,10 +16,16 @@ export const userApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["user"],
+  tagTypes: ["user", "users"],
   endpoints: (builder) => ({
+    getUsers: builder.query<unknown, QueryParam>({
+      query: (data) =>
+        `?Search=${data.Search}&PageIndex=${data.PageIndex}&PageSize=${data.PageSize}&SortBy=${data.SortBy}&SortOrder=${data.SortOrder}`,
+      providesTags: ["users"],
+    }),
     getUserDetail: builder.query<unknown, void>({
       query: () => "/user",
+      providesTags: ["user"],
     }),
     getUserData: builder.query<unknown, void>({
       query: () => "/user-data",
@@ -26,7 +33,7 @@ export const userApi = createApi({
     updateUser: builder.mutation<unknown, UpdateUser>({
       query: (data) => ({
         url: "/user",
-        method: "POST",
+        method: "PUT",
         body: data,
       }),
       invalidatesTags: ["user"],
@@ -35,6 +42,7 @@ export const userApi = createApi({
 });
 
 export const {
+  useGetUsersQuery,
   useGetUserDataQuery,
   useGetUserDetailQuery,
   useUpdateUserMutation,

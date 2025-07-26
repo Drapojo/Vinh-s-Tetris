@@ -1,9 +1,10 @@
+import { appConfigs } from "../configs/app";
 import { useAuth } from "../hooks/useAuth";
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router";
 
 const Menu = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, currentUser } = useAuth();
 
   const logoutHandler = () => {
     logout();
@@ -100,6 +101,25 @@ const Menu = () => {
               >
                 History
               </Button>
+
+              {currentUser?.email === appConfigs.adminEmail && (
+                <Button
+                  as={Link}
+                  to={"/admin"}
+                  w="full"
+                  color="white"
+                  fontFamily="'Press Start 2P', cursive"
+                  bgGradient="linear(to-r, teal.500, blue.500)"
+                  _hover={{
+                    bgGradient: "linear(to-r, teal.400, blue.400)",
+                    transform: "scale(1.05)",
+                    boxShadow: "0px 0px 10px rgba(0, 200, 255, 0.5)",
+                  }}
+                  transition="all 0.2s ease-in-out"
+                >
+                  Admin
+                </Button>
+              )}
 
               <Button
                 w="full"

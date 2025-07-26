@@ -8,5 +8,6 @@ namespace ProjectPRN22_Backend.Repositories.Interfaces
     {
         Task<Users> GetByEmailAsync(string email);
         Task<UserDataDto> GetPlayedData(int id);
+        Task<ResponsePublics<UserPublic>> GetAllWithQueryAsync(QueryParam queryParam);
     }
 }

@@ -10,6 +10,18 @@ namespace ProjectPRN22_Backend.Services.Implementations
         public MusicServices(IMusicsRepo musicsRepo) {
             _musicsRepo = musicsRepo;
         }
+
+        public async Task<Musics> AddMusic(Musics music)
+        {
+            return await _musicsRepo.AddAsync(music);
+        }
+
+        public async Task DeleteMusic(int id)
+        {
+            await _musicsRepo.DeleteAsync(id);
+            return;
+        }
+
         public async Task<IEnumerable<Musics>> GetAllMusic()
         {
             return await _musicsRepo.GetAllAsync();

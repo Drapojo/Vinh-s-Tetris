@@ -18,6 +18,14 @@ namespace ProjectPRN22_Backend.Controllers
             _userServices = userServices;
         }
 
+        [HttpGet()]
+        [Authorize]
+        public async Task<IActionResult> GetAllUsers([FromQuery] QueryParam queryParam)
+        {
+            ResponsePublics<UserPublic> response = await _userServices.GetAllUsers(queryParam);
+            return Ok(response);
+        }
+
         [HttpGet("user")]
         [Authorize]
         [ServiceFilter(typeof(AuthenticateFilter))]

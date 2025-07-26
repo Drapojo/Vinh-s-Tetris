@@ -109,12 +109,10 @@ void RegisterServices(IServiceCollection services)
     services.AddScoped<IHistoryServices, HistoryServices>();
     services.AddScoped<IMusicServices, MusicServices>();
     services.AddScoped<IUserServices, UserServices>();
-    services.AddScoped<IGlobalChatService, GlobalChatServices>();
 }
 
 void RegisterRepositories(IServiceCollection services)
 {
-    services.AddScoped<IGlobalChatsRepo, GlobalChatsRepo>();
     services.AddScoped<IMusicsRepo, MusicsRepo>();
     services.AddScoped<IHistoriesRepo, HistoriesRepo>();
     services.AddScoped<IUsersRepo, UsersRepo>();

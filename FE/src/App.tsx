@@ -12,6 +12,10 @@ import theme from "./theme";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
 import HandleSSO from "./pages/HandleSSO.tsx";
+import AdminPage from "./pages/AdminPage.tsx";
+import AdminLayout from "./layouts/AdminLayout.tsx";
+import MusicPage from "./pages/MusicPage.tsx";
+import UserPage from "./pages/UserPage.tsx";
 
 function App() {
   return (
@@ -28,6 +32,11 @@ function App() {
                 <Route path="/leaderboard" element={<Leaderboard />} />
                 <Route element={<LoggedInLayout />}>
                   <Route path="/history" element={<History />} />
+                </Route>
+                <Route element={<AdminLayout />}>
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/musics" element={<MusicPage />} />
+                  <Route path="/users" element={<UserPage />} />
                 </Route>
               </Route>
               {/*<Route element={<Layout />}>*/}
