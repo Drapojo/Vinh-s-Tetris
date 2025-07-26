@@ -17,13 +17,13 @@ export const userApi = createApi({
   }),
   tagTypes: ["user"],
   endpoints: (builder) => ({
-    getUserDetail: builder.query<any, void>({
+    getUserDetail: builder.query<unknown, void>({
       query: () => "/user",
     }),
-    getUserData: builder.query<any, void>({
+    getUserData: builder.query<unknown, void>({
       query: () => "/user-data",
     }),
-    updateUser: builder.mutation<any, UpdateUser>({
+    updateUser: builder.mutation<unknown, UpdateUser>({
       query: (data) => ({
         url: "/user",
         method: "POST",

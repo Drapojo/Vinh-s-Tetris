@@ -4,7 +4,7 @@ import { leaderboardApi } from "../services/leaderboard.ts";
 import { loginApi } from "../services/login.ts";
 import { historyApi } from "../services/history.ts";
 import { userApi } from "../services/user.ts";
-import {musicApi} from "../services/music.ts";
+import { musicApi } from "../services/music.ts";
 
 export const store = configureStore({
   reducer: {

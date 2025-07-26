@@ -1,5 +1,5 @@
-import {appConfigs} from "../configs/app.ts";
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { appConfigs } from "../configs/app.ts";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseUrl = appConfigs.baseUrl;
 export const backgroundApi = createApi({
@@ -8,7 +8,7 @@ export const backgroundApi = createApi({
     baseUrl: `${baseUrl}/background`,
   }),
   endpoints: (builder) => ({
-    getBackground: builder.query<any, void>({
+    getBackground: builder.query<unknown, void>({
       query: () => "",
     }),
   }),

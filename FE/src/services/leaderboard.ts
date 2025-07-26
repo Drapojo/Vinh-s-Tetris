@@ -9,7 +9,7 @@ export const leaderboardApi = createApi({
     baseUrl: `${baseUrl}/leaderboard`,
   }),
   endpoints: (builder) => ({
-    getLeaderboard: builder.query<any, QueryParam>({
+    getLeaderboard: builder.query<unknown, QueryParam>({
       query: (data) =>
         `?Search=${data.Search}&PageIndex=${data.PageIndex}&PageSize=${data.PageSize}&SortBy=${data.SortBy}&SortOrder=${data.SortOrder}`,
     }),

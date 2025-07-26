@@ -18,14 +18,14 @@ import {
 import EmptyState from "./EmptyState.tsx";
 
 export type HeaderTable = {
-  row?: (value: any, rowData: any) => React.ReactNode;
+  row?: (value: unknown, rowData: unknown) => React.ReactNode;
   sortable?: boolean;
   name: string;
   key: string;
 };
 
 export type BaseTableState = {
-  selected_items?: any[];
+  selected_items?: unknown[];
   sort_by?: string;
   sort_order?: "asc" | "desc" | "";
   page_index?: number;
@@ -62,7 +62,7 @@ interface BaseTableProps<T extends object> {
   isPending?: boolean;
 }
 
-type DataRow = { [key: string]: any; id: string };
+type DataRow = { [key: string]: unknown; id: string };
 
 const BaseTable = <T extends DataRow>({
   columns,
@@ -91,7 +91,7 @@ const BaseTable = <T extends DataRow>({
 
   const toggleSelectItem = (row: T) => {
     const updatedSelectedItems = selected_items?.some(
-      (item) => item.id === row.id
+      (item) => item.id === row.id,
     )
       ? selected_items.filter((item) => item.id !== row.id)
       : [...(selected_items ?? []), row];
@@ -107,8 +107,8 @@ const BaseTable = <T extends DataRow>({
         ? sort_order === "asc"
           ? "desc"
           : sort_order === "desc"
-          ? ""
-          : "asc"
+            ? ""
+            : "asc"
         : "asc";
     const updatedSortBy = updatedSortOrder === "" ? "" : columnKey;
 
@@ -200,7 +200,7 @@ const BaseTable = <T extends DataRow>({
                     <Td>
                       <Checkbox
                         isChecked={selected_items?.some(
-                          (item: any) => item.id === row.id
+                          (item: unknown) => item.id === row.id,
                         )}
                         onChange={() => toggleSelectItem(row)}
                       />

@@ -1,5 +1,5 @@
-import {appConfigs} from "../configs/app.ts";
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { appConfigs } from "../configs/app.ts";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseUrl = appConfigs.baseUrl;
 export const musicApi = createApi({
@@ -8,7 +8,7 @@ export const musicApi = createApi({
     baseUrl: `${baseUrl}/music`,
   }),
   endpoints: (builder) => ({
-    getMusic: builder.query<any, void>({
+    getMusic: builder.query<unknown, void>({
       query: () => "",
     }),
   }),

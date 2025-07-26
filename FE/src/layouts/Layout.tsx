@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   HStack,
   IconButton,
   Input,
@@ -10,29 +9,20 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  Text, useToast,
+  Text,
+  useToast,
 } from "@chakra-ui/react";
+import * as signalR from "@microsoft/signalr";
+import { useEffect, useState } from "react";
+import { FaCheck, FaComments, FaEdit, FaPaperPlane } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
-import {
-  FaCheck, FaComments,
-  FaEdit,
-  FaMusic,
-  FaPaperPlane,
-  FaPause,
-  FaPlay,
-  FaStepBackward,
-  FaStepForward,
-} from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth.ts";
 import { useUpdateUserMutation } from "../services/user.ts";
-import * as signalR from "@microsoft/signalr";
-import {Message} from "../type/GlobalChat.ts";
-import {useGetMusicQuery} from "../services/music.ts";
+import { Message } from "../type/GlobalChat.ts";
+import Disco from "../components/Disco.tsx";
 
 export default function Layout() {
   const toast = useToast();
-  const {data: songs} = useGetMusicQuery();
   const [editedName, setEditedName] = useState("");
   const [isEditingName, toggleEditName] = useState(false);
   const [updateUser] = useUpdateUserMutation();
@@ -43,7 +33,9 @@ export default function Layout() {
   };
   const { isLoggedIn, currentUser, currentUserData } = useAuth();
 
-  const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
+  const [connection, setConnection] = useState<signalR.HubConnection | null>(
+    null,
+  );
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   useEffect(() => {
@@ -68,13 +60,13 @@ export default function Layout() {
     };
   }, []);
   const sendMessage = async () => {
-    if(!isLoggedIn()) {
+    if (!isLoggedIn()) {
       toast({
         status: "error",
         title: "Something went wrong",
         description: "Please login to use this feature!",
         isClosable: true,
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -82,40 +74,6 @@ export default function Layout() {
       await connection.invoke("SendMessage", currentUser.id, newMessage);
       setNewMessage("");
     }
-  }
-
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [currentSongIndex, setCurrentSongIndex] = useState(0);
-
-  const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const nextSong = () => {
-    const nextIndex = (currentSongIndex + 1) % songs.length;
-    setCurrentSongIndex(nextIndex);
-    if (audioRef.current) {
-      audioRef.current.src = songs[nextIndex].url;
-      audioRef.current.play();
-    }
-    setIsPlaying(true);
-  };
-
-  const prevSong = () => {
-    const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    setCurrentSongIndex(prevIndex);
-    if (audioRef.current) {
-      audioRef.current.src = songs[prevIndex].url;
-      audioRef.current.play();
-    }
-    setIsPlaying(true);
   };
 
   return (
@@ -197,98 +155,57 @@ export default function Layout() {
           </Popover>
         )}
 
-        <Popover>
+        <Popover placement="top-start">
           <PopoverTrigger>
-            <Button
-              colorScheme="blue"
-              borderRadius="50%"
+            <IconButton
+              icon={<FaComments />}
+              aria-label="Open Chat"
+              position="fixed"
+              bottom="20px"
+              left="20px"
+              zIndex="1000"
+              borderRadius="full"
               boxShadow="lg"
-              w="50px"
-              h="50px"
-              fontSize="40px"
-              transition="transform 0.3s ease-in-out"
-              _hover={{ transform: "scale(1.1)" }}
-              animation={isPlaying ? "spin 2s linear infinite" : "none"}
-              sx={{
-                "@keyframes spin": {
-                  "0%": { transform: "rotate(0deg)" },
-                  "100%": { transform: "rotate(360deg)" },
-                },
-              }}
-            >
-              <FaMusic />
-            </Button>
+            />
           </PopoverTrigger>
-          <PopoverContent bg="white" p={4} borderRadius="lg" boxShadow="lg">
+          <PopoverContent
+            bg="white"
+            p={4}
+            borderRadius="lg"
+            boxShadow="lg"
+            w="300px"
+          >
             <PopoverArrow />
-            <PopoverBody textAlign="center">
-              <Text fontWeight="bold">{songs ? songs[currentSongIndex]?.name : ""}</Text>
-              <Box mt={2} display="flex" justifyContent="center" gap={3}>
-                <IconButton
-                  aria-label="Previous Song"
-                  icon={<FaStepBackward />}
-                  onClick={prevSong}
-                />
-                {isPlaying ? (
-                  <IconButton
-                    aria-label="Pause"
-                    icon={<FaPause />}
-                    onClick={togglePlay}
-                  />
-                ) : (
-                  <IconButton
-                    aria-label="Play"
-                    icon={<FaPlay />}
-                    onClick={togglePlay}
-                  />
-                )}
-                <IconButton
-                  aria-label="Next Song"
-                  icon={<FaStepForward />}
-                  onClick={nextSong}
-                />
+            <PopoverBody>
+              <Box maxH="200px" overflowY="auto">
+                {messages.map((msg: Message, index) => (
+                  <Box key={index} p={2} borderBottom="1px solid #ddd">
+                    <Text fontWeight="bold" fontSize="sm">
+                      {msg.user}:
+                    </Text>
+                    <Text fontSize="sm" maxW="250px" wordBreak="break-word">
+                      {msg.message}
+                    </Text>
+                  </Box>
+                ))}
               </Box>
+              <HStack mt={3}>
+                <Input
+                  placeholder="Type a message..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                />
+                <IconButton
+                  icon={<FaPaperPlane />}
+                  aria-label="Send"
+                  onClick={sendMessage}
+                />
+              </HStack>
             </PopoverBody>
           </PopoverContent>
         </Popover>
+        <Disco />
       </HStack>
-      <Popover placement="top-start">
-        <PopoverTrigger>
-          <IconButton
-            icon={<FaComments />}
-            aria-label="Open Chat"
-            position="fixed"
-            bottom="20px"
-            left="20px"
-            zIndex="1000"
-            borderRadius="full"
-            boxShadow="lg"
-          />
-        </PopoverTrigger>
-        <PopoverContent bg="white" p={4} borderRadius="lg" boxShadow="lg" w="300px">
-          <PopoverArrow />
-          <PopoverBody>
-            <Box maxH="200px" overflowY="auto">
-              {messages.map((msg: Message, index) => (
-                <Box key={index} p={2} borderBottom="1px solid #ddd">
-                  <Text fontWeight="bold" fontSize="sm">
-                    {msg.user}:
-                  </Text>
-                  <Text fontSize="sm" maxW="250px" wordBreak="break-word">
-                    {msg.message}
-                  </Text>
-                </Box>
-              ))}
-            </Box>
-            <HStack mt={3}>
-              <Input placeholder="Type a message..." value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
-              <IconButton icon={<FaPaperPlane />} aria-label="Send" onClick={sendMessage} />
-            </HStack>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-
-      <audio ref={audioRef} src="/ThemeSong.mp4" autoPlay={true} onEnded={nextSong}/>
       <Outlet />
     </Box>
   );

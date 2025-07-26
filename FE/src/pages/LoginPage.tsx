@@ -1,6 +1,6 @@
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router";
-import {GOOGLE_LOGIN_URL} from "../configs/sso.ts";
+import { GOOGLE_LOGIN_URL } from "../configs/sso.ts";
 
 const LoginPage = () => {
   const loginGoogle = () => {

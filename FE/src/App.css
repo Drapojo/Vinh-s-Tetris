@@ -5,7 +5,8 @@
   height: 2em;
   border-radius: 5px; /* Slight rounding for a modern look */
   border: 1px solid rgba(255, 255, 255, 0.2); /* Softer border */
-  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5),
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.5),
     inset -2px -2px 4px rgba(255, 255, 255, 0.2);
 }
 
@@ -13,7 +14,8 @@
   width: 1.5em; /* Adjust size */
   height: 1.5em;
   border-radius: 3px; /* Slightly rounded */
-  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4),
+  box-shadow:
+    inset 1px 1px 3px rgba(0, 0, 0, 0.4),
     inset -1px -1px 3px rgba(255, 255, 255, 0.15);
 }
 

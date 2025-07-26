@@ -18,12 +18,12 @@ export const historyApi = createApi({
   }),
   tagTypes: ["histories"],
   endpoints: (builder) => ({
-    getHistories: builder.query<any, QueryParam>({
+    getHistories: builder.query<unknown, QueryParam>({
       query: (data) =>
         `?Search=${data.Search}&PageIndex=${data.PageIndex}&PageSize=${data.PageSize}&SortBy=${data.SortBy}&SortOrder=${data.SortOrder}`,
       providesTags: ["histories"],
     }),
-    addHistory: builder.mutation<any, CreateHistories>({
+    addHistory: builder.mutation<unknown, CreateHistories>({
       query: (data) => ({
         url: "",
         method: "POST",

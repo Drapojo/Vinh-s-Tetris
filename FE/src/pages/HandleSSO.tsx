@@ -28,7 +28,7 @@ const HandleSSO = () => {
           title: "Something went wrong",
           description: err.message || "Login failed",
           isClosable: true,
-          duration: 3000
+          duration: 3000,
         });
       })
       .finally(() => {

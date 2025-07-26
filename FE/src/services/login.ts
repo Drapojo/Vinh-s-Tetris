@@ -8,7 +8,7 @@ export const loginApi = createApi({
     baseUrl: `${baseUrl}/login`,
   }),
   endpoints: (builder) => ({
-    login: builder.mutation<any, string>({
+    login: builder.mutation<unknown, string>({
       query: (code) => ({
         url: "",
         method: "POST",
